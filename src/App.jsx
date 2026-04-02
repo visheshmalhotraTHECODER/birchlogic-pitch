@@ -1,158 +1,130 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('manifesto');
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrolled / docHeight) * 100;
+      document.getElementById('scroll-progress').style.width = `${progress}%`;
+
+      const elements = document.querySelectorAll('.fade-in');
+      elements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Trigger on load
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <div className="app-container">
-      <header>
-        <div className="logo">
-          Vishesh <span>Malhotra</span>
+    <div className="story-container">
+      <div className="scroll-progress" id="scroll-progress"></div>
+
+      {/* Intro Section */}
+      <section className="intro-section">
+        <div className="badge fade-in">The Thesis</div>
+        <h1 className="hero-title fade-in">
+          From AI Slop to <br />
+          <span>Organisational Intelligence.</span>
+        </h1>
+        <p className="hero-subtitle fade-in" style={{ transitionDelay: '0.2s' }}>
+          An immersive breakdown of the Birchlogic & Tacit Labs vision, the Software Factory model, and the engineer ready to build it.
+        </p>
+        <p className="fade-in" style={{ marginTop: '3rem', color: 'var(--accent-gold)', fontSize: '0.9rem', letterSpacing: '2px', textTransform: 'uppercase' }}>
+          Scroll to Begin
+        </p>
+      </section>
+
+      {/* The Birchlogic Vision */}
+      <section>
+        <div className="story-grid">
+          <div className="content-block fade-in">
+            <h2>The <span>Birchlogic</span> Architecture</h2>
+            <p>We are shifting from API wrappers to true Agentic Architecture. It's not about querying an LLM anymore; it's about building secure-by-design infrastructure.</p>
+            <p>From AWS Bedrock to Vector DBs and granular Access Controls, Birchlogic is architecting the very foundation where AI meets Enterprise Security.</p>
+          </div>
+          <div className="image-frame fade-in">
+            {/* Replace src with Karan's actual photo in src/assets/karan.png */}
+            <img src="/karan.png" alt="Karan Bhandari" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Karan+Bhandari' }} />
+            <div className="image-caption">Karan Bhandari - Making cybersecurity practical</div>
+          </div>
         </div>
-        <nav>
-          <ul>
-            <li>
-              <a 
-                href="#" 
-                className={activeTab === 'manifesto' ? 'active' : ''} 
-                onClick={(e) => { e.preventDefault(); setActiveTab('manifesto'); }}
-              >
-                Manifesto
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#" 
-                className={activeTab === 'architecture' ? 'active' : ''}
-                onClick={(e) => { e.preventDefault(); setActiveTab('architecture'); }}
-              >
-                Agentic Architecture
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#" 
-                className={activeTab === 'cognition' ? 'active' : ''}
-                onClick={(e) => { e.preventDefault(); setActiveTab('cognition'); }}
-              >
-                Cognition & RAG
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      </section>
 
-      <main>
-        {activeTab === 'manifesto' && (
-          <div className="hero animate">
-            <div className="status-badge" style={{ marginBottom: '2rem', display: 'inline-block', padding: '0.5rem 1rem', background: 'rgba(201, 160, 91, 0.1)', border: '1px solid var(--accent-gold)', borderRadius: '20px', fontSize: '0.8rem', color: 'var(--accent-gold)' }}>
-              SYSTEM STATUS: ONLINE
-            </div>
-            <h1>
-              Moving from API wrappers to <br />
-              <span>Organisational Cognition.</span>
-            </h1>
-            <p className="delay-1 animate">
-              You asked for a PPT. I built a Software Factory instead. 
-              This is my thesis on Agentic Architecture, System Design, and building defensible AI infrastructure.
-            </p>
-            <div className="delay-2 animate">
-              <button 
-                className="btn" 
-                onClick={() => setActiveTab('architecture')}
-              >
-                Enter Architecture
-              </button>
-            </div>
+      {/* Tacit Labs and Super Memory */}
+      <section>
+        <div className="story-grid reversed">
+          <div className="content-block fade-in">
+            <h2>The <span>Tacit Labs</span> Solution</h2>
+            <p>Two operating systems run every company. The official one, and the real one (the expert heuristics). Tacit captures the real one before it walks out the door.</p>
+            <p>By building a 'Super Memory' through procedural and episodic context, we create the critical knowledge layer that stops AI from hallucinating and starts it reasoning.</p>
           </div>
-        )}
-
-        {activeTab === 'architecture' && (
-          <div className="section animate">
-            <div className="section-header">
-              <div className="section-line"></div>
-              <div className="section-title">The Blueprint</div>
-            </div>
-            <h2 style={{ fontSize: '3rem', marginBottom: '1rem' }}>The Software Factory</h2>
-            <p style={{ color: 'var(--text-secondary)', maxWidth: '700px', marginBottom: '4rem' }}>
-              We don't write "slop" anymore. AI is treated as an execution engine constrained by strict architectural rules, context pipelines, and baseline infrastructure.
-            </p>
-
-            <div className="grid">
-              <div className="card">
-                <h3>01. The Harness</h3>
-                <p>APIs (Bedrock, Anthropic) aren't UI tools. They require a systemic harness—abstracted gateways that handle rate limits, auth, and secure execution environments.</p>
-              </div>
-              <div className="card">
-                <h3>02. Memory Management</h3>
-                <p>Agents forget. We implement Episodic (past actions) and Procedural (expert workflows) memory layers to ensure context persists across sessions. Tacit's "real OS".</p>
-              </div>
-              <div className="card">
-                <h3>03. Baseline Infra</h3>
-                <p>Before features, we build the chassis. Dockerized environments, CI/CD pipelines, Zod validations. Secure-by-design isn't a feature, it's the foundation.</p>
-              </div>
-            </div>
-
-            <div className="architecture-diagram animate delay-1">
-              <div className="arch-layer">
-                <h4>Layer 1: Orchestration</h4>
-                <p>Cursor / AI-native IDEs feeding strict `.instructions.md` constraints to the LLM.</p>
-              </div>
-              <div className="arch-layer">
-                <h4>Layer 2: Cognition (RAG & Vector DBs)</h4>
-                <p>Dynamic context retrieval. Injecting company heuristics into the prompt window before execution.</p>
-              </div>
-              <div className="arch-layer">
-                <h4>Layer 3: Execution</h4>
-                <p>Sandboxed, validated code output pushed through standardized testing frameworks.</p>
-              </div>
-            </div>
+          <div className="image-frame fade-in">
+             {/* Replace src with Jaskaran's actual photo in src/assets/jaskaran.png */}
+            <img src="/jaskaran.png" alt="Jaskaran Singh" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Jaskaran+Singh' }} />
+            <div className="image-caption">Jaskaran Singh - Building Organisational Intelligence</div>
           </div>
-        )}
+        </div>
+      </section>
 
-        {activeTab === 'cognition' && (
-          <div className="section animate">
-            <div className="section-header">
-              <div className="section-line"></div>
-              <div className="section-title">Improving Intelligence</div>
-            </div>
-            <h2 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Making Models Smarter</h2>
-            <p style={{ color: 'var(--text-secondary)', maxWidth: '700px', marginBottom: '4rem' }}>
-              Base models hallucinate. To build production-level agents, we have to inject ground truth and optimize inference.
-            </p>
-
-            <div className="grid">
-               <div className="card">
-                <h3 style={{ color: 'var(--accent-gold)' }}>Retrieval-Augmented Gen (RAG)</h3>
-                <p>We don't fine-tune for facts. We chunk organizational data, store it in Vector Databases, and retrieve exact context at runtime. Cheaper, faster, and highly accurate.</p>
-              </div>
-              <div className="card">
-                <h3 style={{ color: 'var(--accent-gold)' }}>System Constraints</h3>
-                <p>Using leaked system prompts (like Claude's) as case studies to understand how Anthropic controls alignment. We apply strict XML-tagged constraints to limit model drift.</p>
-              </div>
-              <div className="card">
-                <h3 style={{ color: 'var(--accent-gold)' }}>Batching & Caching</h3>
-                <p>Semantic caching of previous queries to save compute. Batching low-priority eval jobs. Intelligence optimization is also cost optimization.</p>
-              </div>
-            </div>
-
-            <div className="terminal-box animate delay-1">
-              <p>root@birchlogic-sys:~# tail -f /var/log/ai_agent.log</p>
-              <p>[INFO] Starting query resolution...</p>
-              <p style={{ color: '#aaa' }}>[WARN] Model lacks context. Fetching from VectorDB...</p>
-              <p>[INFO] 4 relevant chunks retrieved. Injecting into harness.</p>
-              <p>[INFO] Super-memory loaded: User prefers concise, secure code.</p>
-              <p style={{ color: 'var(--accent-gold)' }}>[SUCCESS] Inference complete. No hallucinations detected.</p>
-            </div>
+      {/* The Software Factory Plan */}
+      <section>
+        <div className="content-block fade-in" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <h2>My <span>Software Factory</span> Plan</h2>
+          <p style={{ margin: '0 auto', maxWidth: '700px' }}>To execute this vision, we must move from raw prompting to rigorous engineering. Here is how I structure the pipeline.</p>
+        </div>
+        
+        <div className="detailed-grid">
+          <div className="detail-card fade-in">
+            <div className="step-number">01</div>
+            <h3>Constraint Layer</h3>
+            <p>Using strict rules (.instructions.md) to constrain LLMs. No slop. Code adheres to baseline infrastructure standards before a single file is written.</p>
           </div>
-        )}
-      </main>
+          <div className="detail-card fade-in" style={{ transitionDelay: '0.1s' }}>
+            <div className="step-number">02</div>
+            <h3>RAG & Cognition</h3>
+            <p>Integrating Vector DBs to fetch exact enterprise context. Instead of tuning massive models, we inject dynamic ground truth via the prompt harness.</p>
+          </div>
+          <div className="detail-card fade-in" style={{ transitionDelay: '0.2s' }}>
+            <div className="step-number">03</div>
+            <h3>Secure Pipelines</h3>
+            <p>Automated QA, strict typing (Zod), modular separation of concerns. The factory line ensures no code ships without rigorous validation.</p>
+          </div>
+        </div>
+      </section>
 
-      <footer>
-        <div>Built for the Birchlogic Pitch.</div>
-        <div>Vishesh Malhotra © 2026</div>
-      </footer>
+      {/* The Missing Piece: Vishesh */}
+      <section>
+        <div className="story-grid">
+           <div className="image-frame fade-in">
+             {/* Replace src with Vishesh's actual photo in src/assets/vishesh.png */}
+            <img src="/vishesh.png" alt="Vishesh Malhotra" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Vishesh+Malhotra' }} />
+            <div className="image-caption">Vishesh Malhotra - The Builder</div>
+          </div>
+          <div className="content-block fade-in">
+            <h2>The <span>Missing</span> Piece</h2>
+            <p>I am not just looking for a role; I am looking to build real systems. A company mapping expert cognition and securing enterprise AI needs builders who think in architectures, not just syntax.</p>
+            <p>I understand the problem. I understand the vision. Tell me where to start coding.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="cta-section fade-in">
+        <h2 style={{ fontSize: '3.5rem', marginBottom: '1rem', color: '#fff' }}>Ready to Build.</h2>
+        <p style={{ color: 'var(--text-secondary)' }}>You don't need another generic coder. You need a systems engineer.</p>
+        <button className="cta-button" onClick={() => window.open('https://linkedin.com/in/vishesh-malhotra1', '_blank')}>
+          Hire Vishesh Now
+        </button>
+      </section>
     </div>
   );
 }

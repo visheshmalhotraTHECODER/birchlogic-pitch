@@ -53,7 +53,7 @@ function App() {
           </div>
           <div className="image-frame fade-in">
             {/* Replace src with Karan's actual photo in src/assets/karan.png */}
-            <img src="/karan.png" alt="Karan Bhandari" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Karan+Bhandari' }} />
+            <img src="/karan.png.png" alt="Karan Bhandari" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Karan+Bhandari' }} />
             <div className="image-caption">Karan Bhandari - Making cybersecurity practical</div>
           </div>
         </div>
@@ -69,7 +69,7 @@ function App() {
           </div>
           <div className="image-frame fade-in">
              {/* Replace src with Jaskaran's actual photo in src/assets/jaskaran.png */}
-            <img src="/jaskaran.png" alt="Jaskaran Singh" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Jaskaran+Singh' }} />
+            <img src="/jaskaran.png.png" alt="Jaskaran Singh" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Jaskaran+Singh' }} />
             <div className="image-caption">Jaskaran Singh - Building Organisational Intelligence</div>
           </div>
         </div>
@@ -106,7 +106,7 @@ function App() {
         <div className="story-grid">
            <div className="image-frame fade-in">
              {/* Replace src with Vishesh's actual photo in src/assets/vishesh.png */}
-            <img src="/vishesh.png" alt="Vishesh Malhotra" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Vishesh+Malhotra' }} />
+            <img src="/vishesh.png.png" alt="Vishesh Malhotra" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x450/111/d4af37?text=Vishesh+Malhotra' }} />
             <div className="image-caption">Vishesh Malhotra - The Builder</div>
           </div>
           <div className="content-block fade-in">
